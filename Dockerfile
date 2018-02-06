@@ -1,14 +1,15 @@
-FROM sdal/mro-ldap-ssh-c7
+FROM sdal/mro-c7sd_auth
 MAINTAINER "Aaron D. Schroeder" <aschroed@vt.edu>
 
 ## Add RStudio binaries to PATH
 ENV PATH /usr/lib/rstudio-server/bin/:$PATH
 
 ## Install Download Prerequisites
+RUN yum install -y initscripts
 RUN cp /etc/pam.d/login /etc/pam.d/rstudio
 
 ## Download and Install Rstudio-server
-RUN curl -O https://s3.amazonaws.com/rstudio-dailybuilds/rstudio-server-rhel-1.1.353-x86_64.rpm
+RUN curl -O https://download2.rstudio.org/rstudio-server-rhel-1.1.419-x86_64.rpm
 RUN yum install -y --nogpgcheck rstudio-server-rhel-*.rpm
 RUN systemctl enable rstudio-server
 
